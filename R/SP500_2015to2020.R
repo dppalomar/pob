@@ -1,0 +1,14 @@
+#' Stock price data of the index and constituent stocks of the S&P 500 from 2015 to 2020
+#'
+#' @description Stock data downloaded from Yahoo!Finance and cleaned with package `imputeFin` (for missing values and outliers).
+#' All the data is adjusted for splits & dividends.
+#'
+#' @docType data
+#'
+#' @usage data(SP500_2015to2020)
+#'
+#' @source Yahoo!Finance, Wikipedia (https://en.wikipedia.org/wiki/List_of_S%26P_500_companies)
+#'
+#' @keywords datasets
+#'
+"SP500_2015to2020"

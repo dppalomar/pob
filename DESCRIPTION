@@ -1,0 +1,19 @@
+Package: pob
+Title: Supporting package for Portfolio Optimization book
+Version: 0.1.0
+Description: Supporting package for Portfolio Optimization book
+    package portfolioBacktest.
+Authors@R: c(
+  person(c("Daniel", "P."), "Palomar", role = c("cre", "aut"), email = "daniel.p.palomar@gmail.com")
+  )
+Maintainer: Daniel P. Palomar <daniel.p.palomar@gmail.com>
+URL:
+BugReports:
+Depends: R (>= 3.5.0)
+License: GPL-3 | file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    xts
+RoxygenNote: 7.1.1
+Suggests:
