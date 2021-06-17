@@ -4,7 +4,7 @@ help(package = "portfolioBacktestData")
 
 data(SP500_Bloomberg)
 
-close_prices <- SP500_Bloomberg$close["2015-01-04::"]
+close_prices <- SP500_Bloomberg$close["2015-01-04::"]  # already in UTC time
 index_prices <- SP500_Bloomberg$index["2015-01-04::"]
 
 #rows_with_na <- apply(close_prices, 1, anyNA)
