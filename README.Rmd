@@ -1,10 +1,10 @@
 ---
 output:
-  md_document:
-    variant: markdown_github
   html_document:
     variant: markdown_github
     keep_md: true
+  md_document:
+    variant: markdown_github
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -26,6 +26,7 @@ knit_hooks$set(pngquant = hook_pngquant)
 # pob
 This is a supporting package for the Portfolio Optimization book.
 
+To install:
 ```{r, eval=FALSE}
 devtools::install_github("dppalomar/pob")
 ```
