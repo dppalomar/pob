@@ -1,8 +1,8 @@
 Package: pob
-Title: Supporting package for Portfolio Optimization book
+Title: Supporting package for the Portfolio Optimization course
 Version: 0.1.0
-Description: Supporting package for Portfolio Optimization book
-    package portfolioBacktest.
+Description: Supporting package for the Portfolio Optimization course. 
+    It contains S&P500 stocks' data as well as crypto data.
 Authors@R: c(
   person(c("Daniel", "P."), "Palomar", role = c("cre", "aut"), email = "daniel.p.palomar@gmail.com")
   )
