@@ -48,11 +48,14 @@ plot(prices_hourly_usdt)
 # get daily prices
 idx_end_day <- endpoints(prices_hourly_usdt, on = "days")
 prices_daily_usdt <- prices_hourly_usdt[idx_end_day, ]
+tclass(prices_daily_usdt) <- "Date"
 
 idx_end_day <- endpoints(prices_hourly_usdt_orig, on = "days")
 prices_daily_usdt_orig <- prices_hourly_usdt_orig[idx_end_day, ]
+tclass(prices_daily_usdt_orig) <- "Date"
 
-
+# # get data from Yahoo!Finance
+# btc_prices <- Ad(getSymbols("BTC-USD", from = "2017-01-01", auto.assign = FALSE))
 
 cryptos_2017to2021 <- list(daily  = prices_daily_usdt_orig,
                            hourly = prices_hourly_usdt)

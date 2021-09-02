@@ -7,6 +7,7 @@ install.packages(file.choose(), repos = NULL, type="source")
 library(pob)
 help(package = "pob")
 ?SP500_2015to2020
+?cryptos_2017to2021
 #tools::showNonASCIIfile("R/SP500_2015to2020.R")
 
 

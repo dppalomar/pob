@@ -3,14 +3,18 @@
 \docType{data}
 \name{cryptos_2017to2021}
 \alias{cryptos_2017to2021}
-\title{Cryptocurrency daily and hourly price data between 2017 and 2021}
+\title{Cryptocurrency daily and hourly price data between 2017 and 2021.}
 \format{
-An object of class \code{list} of length 2.
+List with the following elements:
+\describe{
+  \item{daily}{An `xts` object from 2017 to 2021 with daily close prices of 9 cryptocurrencies.}
+  \item{hourly}{An `xts` object from 2021-01 to 2021-06 with hourly close prices of 82 cryptocurrencies.}
+}
 }
 \usage{
 data(cryptos_2017to2021)
 }
 \description{
-Cryptocurrency daily (since 2017) and hourly (since 2021) price data between 2017 and 2021.
+Cryptocurrency daily data (since 2017) and hourly data (since 2021) until 2021.
 }
 \keyword{datasets}
