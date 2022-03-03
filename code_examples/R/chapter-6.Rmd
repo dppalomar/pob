@@ -1,5 +1,7 @@
 ---
-title: "Code examples in R for Chapter 6"
+title: |
+  | Code examples in R for Chapter 6:
+  | Portfolio Basics
 author: "Daniel P. Palomar"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
@@ -7,6 +9,13 @@ output:
     toc: true
     toc_depth: 2
     toc_float: true
+header-includes:
+  - \newcommand{\bm}[1]{\boldsymbol{#1}}
+  - \newcommand{\w}{\bm{w}}
+  - \newcommand{\bmu}{\bm{\mu}}
+  - \newcommand{\bSigma}{\bm{\Sigma}}
+  - \newcommand{\textm}[1]{\textsf{#1}}
+  - \def\t{{\mkern-2mu\raise-1mu\mathsf{T}}}
 ---
 
 ```{r, echo=FALSE}
@@ -20,13 +29,7 @@ knitr::opts_chunk$set(
 )
 options(width=120)
 ```
-\newcommand{\bm}[1]{\boldsymbol{#1}}
-<!--- https://bookdown.org/yihui/rmarkdown/html-document.html#includes
-output:
-  html_document:
-    includes:
-      in_header: header.html
---->
+
 ------------
 
 
@@ -194,9 +197,43 @@ bt$`1/N`$data1$w_bop["2020-01::2020-08", ] %>%
 # Heuristic portfolios
 We now compare the following heuristic portfolios:
 
-- $1/N"$ portfolio;
-- GMRP;
-- Quintile portfolio (sorting stocks by $\bm{\mu}$);
+- $1/N$ portfolio:
+$$
+\w = \frac{1}{N}\bm{1};
+$$
+- GMRP:
+$$
+  \begin{array}{ll}
+  \underset{\w}{\textm{maximize}} & \w^\t\bmu\\
+  \textm{subject to} & \bm{1}^\t\w=1, \quad \w\ge\bm{0};
+  \end{array}
+$$
+- Quintile portfolio (sorting stocks by $\bm{\mu}$):
+$$
+  \w = \frac{1}{N/5}\left[\begin{array}{c}
+  \begin{array}{c}
+  1\\
+  \vdots\\
+  1
+  \end{array}\\
+  \begin{array}{c}
+  0\\
+  \vdots\\
+  0
+  \end{array}
+  \end{array}\right]\begin{array}{c}
+  \left.\begin{array}{c}
+  \\
+  \\
+  \\
+  \end{array}\right\} 20\%\\
+  \left.\begin{array}{c}
+  \\
+  \\
+  \\
+  \end{array}\right\} 80\%
+  \end{array}
+$$
 - Quintile portfolio (sorting stocks by $\bm{\mu}/\bm{\sigma}$); and
 - Quintile portfolio (sorting stocks by $\bm{\mu}/\bm{\sigma}^2$).
 
@@ -299,11 +336,36 @@ summaryTable(summary_bt, type = "DT",
 # Risk-based portfolios
 We now compare the following risk-based portfolios:
 
-- GMVP;
-- IVP;
-- RPP;
-- MDP; and 
-- MDCP.
+- global maximum return portfolio (GMRP):
+$$
+\begin{array}{ll}
+\underset{\w}{\textm{minimize}} & \w^\t\bSigma\w\\
+\textm{subject to} & \bm{1}^\t\w=1, \quad \w\ge\bm{0};
+\end{array}
+$$
+
+- inverse volatility portfolio (IVP):
+$$
+\w = \frac{\bm{\sigma}^{-1}}{\bm{1}^\t\bm{\sigma}^{-1}};
+$$
+- risk parity portfolio (RPP);
+
+- most diversified portfolio (MDP):
+$$
+  \begin{array}{ll}
+  \underset{\w}{\textm{minimize}} & \dfrac{\w^\t\bm{\sigma}}{\sqrt{\w^\t\bmu\w}}\\
+  \textm{subject to} & \bm{1}^\t\w=1, \quad \w\ge\bm{0};
+  \end{array}
+$$  
+  
+- maximum decorrelation portfolio (MDCP):
+$$
+  \begin{array}{ll}
+  \underset{\w}{\textm{minimize}} & \w^\t\bm{C}\w\\
+  \textm{subject to} & \bm{1}^\t\w=1, \quad \w\ge\bm{0},
+  \end{array}
+$$
+where $\bm{C} = \textm{Diag}\left(\bSigma\right)^{-1/2} \bSigma \textm{Diag}\left(\bSigma\right)^{-1/2}.$
 
 ```{r, echo=TRUE, message=TRUE, fig.width=9, fig.height=4}
 data(SP500_2015to2020)
