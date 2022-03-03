@@ -1,11 +1,3 @@
----
-output:
-  html_document:
-    variant: markdown_github
-    keep_md: true
-  md_document:
-    variant: markdown_github
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -65,7 +57,12 @@ head(cryptos_2017to2021$hourly[, 1:5])
 # Code examples
 
 - Chapter 6: Portfolio Basics
-  + code examples in R: [Rmd](code_examples/chapter-6/Rsession.Rmd), [html](code_examples/chapter-6/Rsession.html)
+  + code examples in R: [Rmd](code_examples/chapter-6/Rsession.Rmd), [html](https://raw.githack.com/dppalomar/pob/master/code_examples/chapter-6/Rsession.html), 
+  + code examples in Python: TBD
+  
+- Chapter 7: Modern Portfolio Theory
+  + code examples in R: TBD
+  + code examples in Python: TBD
   
   
   
