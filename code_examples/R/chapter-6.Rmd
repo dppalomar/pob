@@ -336,7 +336,7 @@ summaryTable(summary_bt, type = "DT",
 # Risk-based portfolios
 We now compare the following risk-based portfolios:
 
-- global maximum return portfolio (GMRP):
+- global minimum variance portfolio (GMVP):
 $$
 \begin{array}{ll}
 \underset{\w}{\textm{minimize}} & \w^\t\bSigma\w\\
