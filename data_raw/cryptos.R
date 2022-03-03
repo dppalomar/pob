@@ -1,10 +1,9 @@
 library(xts)
 library(lubridate)
-library(cryptodata)
+#library(cryptodata)
 help(package = "cryptodata")
 
-data(cryptodata_xxxusdt_period_1hour)
-data(cryptodata_xxxbtc_period_1hour)
+data(cryptodata_Huobi_period_1hour)
 
 # with_tz(now(), "UTC")
 # with_tz("2021-01-07 09:00:00 HKT", "UTC")

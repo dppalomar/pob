@@ -1,0 +1,426 @@
+---
+title: "Code examples in R for Chapter 6"
+author: "Daniel P. Palomar"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document:
+    #theme: flatly
+    #highlight: pygments
+    toc: true
+    toc_depth: 2
+    toc_float: true
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "R>>",
+  fig.align = "center"
+)
+options(width=120)
+```
+
+------------
+
+
+# Packages
+The following packages are used in the examples:
+```{r, echo=TRUE, message=FALSE}
+# basic finance
+library(xts)                    # to manipulate time series of stock data
+library(quantmod)               # to download stock data
+library(PerformanceAnalytics)   # to compute performance measures
+library(portfolioBacktest)      # to conduct backtests
+library(pob)                    # book package with financial data
+
+# plotting
+library(ggplot2)                # for nice plots
+library(magrittr)               # for pipeline operator %>%
+library(reshape2)
+
+# optimization
+library(CVXR)
+library(riskParityPortfolio)
+```
+
+
+# Preliminaries
+We start with basic aspects such as data loading and plotting.
+
+##### Loading market data {-}
+Loading market data could be conveniently done with the package `quantmod` from Yahoo!Finance or any other source:
+```{r, echo=TRUE, eval=FALSE}
+# download data from Yahoo!Finance
+getSymbols(c("AMD", "MGM", "AAPL", "AMZN", "TSCO"), from = "2019-10-01", to = "2021-12-31")
+
+# extract the adjusted close prices of AAPL
+Ad(APPL)
+```
+
+However, for convenience we will use stock data and cryptocurrency data from the official portfolio optimization book package `pob`:
+```{r, echo=TRUE}
+# crypto data
+data(cryptos_2017to2021)
+names(cryptos_2017to2021)
+head(cryptos_2017to2021$hourly[, 1:5])
+
+# stock S&P500 market data
+data(SP500_2015to2020)
+names(SP500_2015to2020)
+head(SP500_2015to2020$stocks[, 1:5])
+```
+
+
+##### Plotting data {-}
+Plotting data could be conveniently done with the packages `xts` and `PerformanceAnalytics`:
+```{r, echo=TRUE, eval=FALSE}
+stock_prices <- SP500_2015to2020$stocks["2019-10::", "AAPL"]
+
+# basic xts plot
+plot(stock_prices)
+
+# using PerformanceAnalytics
+rets <- CalculateReturns(stock_prices)
+chart.CumReturns(rets)
+chart.Drawdown(rets)
+```
+
+However, we prefer to use the package `ggplot2` for more beautiful plots (albeit at the expense of a few extra lines of code):
+```{r, echo=TRUE, fig.width=9, fig.height=5}
+stock_prices <- SP500_2015to2020$stocks["2019-10::", c("AMD", "MGM", "AAPL")]
+rets <- stock_prices/lag(stock_prices) - 1
+
+ggplot(fortify(stock_prices, melt = TRUE), aes(x = Index, y = Value, color = Series)) +
+  geom_line() +
+  scale_x_date(date_breaks = "2 months", date_labels = "%b %Y", date_minor_breaks = "1 week") +
+  labs(title = "Prices", x = "", y = "", color = "stocks")
+
+ggplot(fortify(Drawdowns(rets), melt = TRUE), aes(x = Index, y = Value, color = Series)) +
+  geom_line() +
+  scale_x_date(date_breaks = "2 months", date_labels = "%b %Y", date_minor_breaks = "1 week") +
+  labs(title = "Drawdown", x = "", y = "", color = "stocks")
+```
+
+
+# Backtesting
+We now consider how to perform backtests and explore rebalancing aspects.
+
+##### Naive backtesting {-}
+For illustrative purposes we now backtest the $1/N$ portfolio:
+```{r, echo=TRUE}
+stock_prices <- SP500_2015to2020$stocks["2019-10::", c("AMD", "MGM", "AAPL", "AMZN", "TSCO")]
+N <- ncol(stock_prices)
+T <- nrow(stock_prices)
+
+# linear returns
+X <- stock_prices/lag(stock_prices) - 1
+
+# portfolio
+w <- rep(1/N, N)
+
+# naive backtest (assumed daily rebalancing and no transaction cost)
+portf_ret <- xts(X %*% w, index(X))
+head(na.omit(portf_ret))
+```
+
+However, multiplying the matrix of linear returns of the assets `X` by the portfolio `w` implicitly assumes that we are rebalancing at every period (and also ignoring the transaction costs). To perform more realistic backtests we can use the package `portfolioBactest` where one can specify how often the portfolio is reoptimized, rebalanced, and the lookback windows to be used in a rolling-window basis (as well as transaction costs). Let's start by reproducing the previous naive backtest assuming daily rebalancing:
+```{r, echo=TRUE, message=TRUE}
+# define our portfolio
+EWP <- function(data, ...) {
+  N <- ncol(data$prices)
+  return(rep(1/N, N))
+}
+
+# perform backtest
+bt <- portfolioBacktest(portfolio_funs = list("1/N" = EWP),
+                        dataset_list = list(list("prices" = stock_prices)), price_name = "prices",
+                        lookback = 1, optimize_every = 1, rebalance_every = 1)
+
+head(bt$`1/N`$data1$return)
+```
+```{r, echo=FALSE}
+# cbind("direct multiplication"   = portf_ret,
+#       "using portfolioBacktest" = bt$`1/N`$data1$return, check.names = FALSE) %>%
+#   fortify(melt = TRUE) %>%
+#   ggplot(aes(x = Index, y = Value, color = Series)) +
+#   geom_line() +
+#   scale_x_date(date_breaks = "2 months", date_labels = "%b %Y", date_minor_breaks = "1 week") +
+#   ggtitle("Returns") + xlab(element_blank()) + ylab(element_blank()) + labs(color = "stocks")
+```
+
+
+##### Rebalancing in backtesting {-}
+Now we can perform a more realistic backtest rebalancing, say, every week (i.e., 5 days), including transaction costs:
+```{r, echo=TRUE, message=TRUE, fig.width=9, fig.height=5}
+bt <- portfolioBacktest(portfolio_funs = list("1/N" = EWP),
+                        dataset_list = list(list("prices" = stock_prices)), price_name = "prices",
+                        lookback = 1, optimize_every = 5, rebalance_every = 5,
+                        cost = list(buy = 30e-4, sell = 30e-4))
+head(bt$`1/N`$data1$wealth)
+backtestChartCumReturn(bt)
+```
+
+
+Let's observe the evolution of the $1/N$ portfolio over time for a universe of 5 stocks, showing the effect of rebalancing (indicated with black vertical lines):
+```{r, echo=TRUE, message=TRUE, fig.width=9, fig.height=4}
+stock_prices <- SP500_2015to2020$stocks["2019-10::", c("AMD", "MGM", "AAPL", "AMZN", "TSCO")]
+
+bt <- portfolioBacktest(portfolio_funs = list("1/N" = EWP),
+                        dataset_list = list(list("prices" = stock_prices)), price_name = "prices",
+                        lookback = 10, optimize_every = 90, rebalance_every = 90)
+
+bt$`1/N`$data1$w_bop["2020-01::2020-08", ] %>%
+  fortify(melt = TRUE) %>%
+  ggplot(aes(x = Index, y = Value, fill = Series)) +
+  geom_bar(stat = "identity", width = 4.0) +
+  scale_fill_manual(values = rainbow6equal) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %Y", date_minor_breaks = "1 week") +
+  labs(title = "Weight allocation over time for portfolio 1/N", x = "", y = "weight", color = "stocks") +
+  geom_vline(xintercept = as.Date("2020-02-23"), color = "black") +
+  geom_vline(xintercept = as.Date("2020-07-03"), color = "black")
+```
+
+
+
+
+
+# Heuristic portfolios
+We now compare the following heuristic portfolios:
+
+- $1/N"$ portfolio;
+- GMRP;
+- Quintile portfolio (sorting stocks by $\bm{\mu}$);
+- Quintile portfolio (sorting stocks by $\bm{\mu}/\bm{\sigma}$); and
+- Quintile portfolio (sorting stocks by $\bm{\mu}/\bm{\sigma}^2$).
+
+
+```{r, echo=TRUE, message=TRUE, fig.width=9, fig.height=4}
+data(SP500_2015to2020)
+stock_prices <- SP500_2015to2020$stocks["2019::", c("AAPL", "AMZN", "AMD", "GM", "GOOGL", "MGM", "MSFT", "QCOM", "TSCO", "UPS")]
+T <- nrow(stock_prices)
+T_trn <- round(0.70*T)
+
+#
+# Define portfolios
+#
+QuintP_mu <- function(dataset, ...) {
+  N <- ncol(dataset$prices)
+  X <- diff(log(dataset$prices))[-1]
+  mu <- colMeans(X)
+  idx <- order(mu, decreasing = TRUE)
+  w <- rep(0, N)
+  w[idx[1:round(N/5)]] <- 1/round(N/5)
+  return(w)
+}
+
+QuintP_mu_over_sigma <- function(dataset, ...) {
+  N <- ncol(dataset$prices)
+  X <- diff(log(dataset$prices))[-1]
+  mu <- colMeans(X)
+  Sigma <- cov(X)
+  idx <- order(mu/sqrt(diag(Sigma)), decreasing = TRUE)
+  w <- rep(0, N)
+  w[idx[1:round(N/5)]] <- 1/round(N/5)
+  return(w)
+}
+
+QuintP_mu_over_sigma2 <- function(dataset, ...) {
+  N <- ncol(dataset$prices)
+  X <- diff(log(dataset$prices))[-1]
+  mu <- colMeans(X)
+  Sigma <- cov(X)
+  idx <- order(mu/diag(Sigma), decreasing = TRUE)
+  w <- rep(0, N)
+  w[idx[1:round(N/5)]] <- 1/round(N/5)
+  return(w)
+}
+
+GMRP <- function(dataset, ...) {
+  N <- ncol(dataset$prices)
+  X <- diff(log(dataset$prices))[-1]
+  mu <- colMeans(X)
+  i_max <- which.max(mu)
+  w <- rep(0, N)
+  w[i_max] <- 1
+  return(w)
+}
+
+# single backtest
+bt <- portfolioBacktest(
+  portfolio_funs = list("1/N"                          = EWP,
+                        "GMRP"                         = GMRP,
+                        "QuintP (sorted by mu)"        = QuintP_mu,
+                        "QuintP (sorted by mu/sigma)"  = QuintP_mu_over_sigma,
+                        "QuintP (sorted by mu/sigma2)" = QuintP_mu_over_sigma2),
+  dataset_list = list(list("prices" = stock_prices)), price_name = "prices",
+  lookback = T_trn, optimize_every = 30, rebalance_every = 1)
+
+# barplot
+data.frame(
+  "stocks" = names(stock_prices),
+  "1/N"    = as.numeric(bt$`1/N`$data1$w_optimized[1, ]),
+  "GMRP"   = as.numeric(bt$`GMRP`$data1$w_optimized[1, ]),
+  "QuintP (sorted by mu)" = as.numeric(bt$`QuintP (sorted by mu)`$data1$w_optimized[1, ]),
+  "QuintP (sorted by mu/sigma)" = as.numeric(bt$`QuintP (sorted by mu/sigma)`$data1$w_optimized[1, ]),
+  "QuintP (sorted by mu/sigma2)" = as.numeric(bt$`QuintP (sorted by mu/sigma2)`$data1$w_optimized[1, ]),
+  check.names = FALSE
+) %>% melt(., id.vars = "stocks") %>%
+  ggplot(aes(x = stocks, y = value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black", width = 0.8) +
+  labs(title = "Capital weight allocation for different portfolios", y = "weight", fill = "portfolios")
+```
+
+```{r, echo=TRUE, fig.width=9, fig.height=4}
+backtestChartCumReturn(bt) +
+  geom_line(size = 0.8) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %Y", date_minor_breaks = "1 day") +
+  ggtitle("Cumulative return (out of sample)")
+
+backtestChartDrawdown(bt) +
+  geom_line(size = 0.8) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %Y", date_minor_breaks = "1 day") +
+  ggtitle("Drawdown (out of sample)")
+
+summary_bt <- backtestSummary(bt)
+options(DT.options = list(dom = "t"))  # only show bare table (no search box)
+summaryTable(summary_bt, type = "DT",
+             measures = c("Sharpe ratio", "annual return", "annual volatility", "max drawdown")) 
+```
+
+
+
+# Risk-based portfolios
+We now compare the following risk-based portfolios:
+
+- GMVP;
+- IVP;
+- RPP;
+- MDP; and 
+- MDCP.
+
+```{r, echo=TRUE, message=TRUE, fig.width=9, fig.height=4}
+data(SP500_2015to2020)
+stock_prices <- SP500_2015to2020$stocks["2019::", c("AAPL", "AMZN", "AMD", "GM", "GOOGL", "MGM", "MSFT", "QCOM", "TSCO", "UPS")]
+T <- nrow(stock_prices)
+T_trn <- round(0.70*T)
+
+#
+# Define portfolios
+#
+design_GMVP <- function(Sigma) {
+  w <- Variable(nrow(Sigma))
+  prob <- Problem(Minimize(quad_form(w, Sigma)),
+                  constraints = list(w >= 0, sum(w) == 1))
+  result <- solve(prob)
+  w <- as.vector(result$getValue(w))
+  return(w)
+}
+
+GMVP <- function(dataset, ...) {
+  N <- ncol(dataset$prices)
+  X <- diff(log(dataset$prices))[-1]
+  Sigma <- cov(X)
+  w <- design_GMVP(Sigma)
+  return(w)
+}
+
+design_IVP <- function(Sigma) {
+  sigma <- sqrt(diag(Sigma))
+  w <- 1/sigma
+  w <- w/sum(w)
+  return(w)
+}
+
+IVP <- function(dataset, ...) {
+  N <- ncol(dataset$prices)
+  X <- diff(log(dataset$prices))[-1]
+  Sigma <- cov(X)
+  w <- design_IVP(Sigma)
+  return(w)
+}
+
+
+RPP <- function(dataset, ...) {
+  N <- ncol(dataset$prices)
+  X <- diff(log(dataset$prices))[-1]
+  Sigma <- cov(X)
+  w <- riskParityPortfolio(Sigma)$w
+  return(w)
+}
+
+design_MSRP <- function(mu, Sigma) {
+  w_ <- Variable(nrow(Sigma))
+  prob <- Problem(Minimize(quad_form(w_, Sigma)),
+                  constraints = list(w_ >= 0, t(mu) %*% w_ == 1))
+  result <- solve(prob)
+  w <- as.vector(result$getValue(w_)/sum(result$getValue(w_)))
+  names(w) <- colnames(Sigma)
+  return(w)
+}
+
+MDP <- function(dataset, ...) {
+  N <- ncol(dataset$prices)
+  X <- diff(log(dataset$prices))[-1]
+  Sigma <- cov(X)
+  w <- design_MSRP(mu = sqrt(diag(Sigma)), Sigma)
+  return(w)
+}
+
+design_MDCP <- function(Sigma) {
+  C <- diag(1/sqrt(diag(Sigma))) %*% Sigma %*% diag(1/sqrt(diag(Sigma)))
+  colnames(C) <- colnames(Sigma)
+  return(design_GMVP(Sigma = C))
+}
+
+MDCP <- function(dataset, ...) {
+  N <- ncol(dataset$prices)
+  X <- diff(log(dataset$prices))[-1]
+  Sigma <- cov(X)
+  w <- design_MDCP(Sigma)
+  return(w)
+}
+
+
+# single backtest
+bt <- portfolioBacktest(portfolio_funs = list("GMVP"  = GMVP,
+                                              "IVP"   = IVP,
+                                              "RPP"   = RPP,
+                                              "MDP"   = MDP,
+                                              "MDCP"  = MDCP),
+                        dataset_list = list(list("prices" = stock_prices)), price_name = "prices",
+                        lookback = T_trn, optimize_every = 30, rebalance_every = 1)
+
+# barplot
+data.frame(
+  "stocks" = names(stock_prices),
+  "GMVP"   = as.numeric(bt$`GMVP`$data1$w_optimized[1, ]),
+  "IVP"    = as.numeric(bt$`IVP`$data1$w_optimized[1, ]),
+  "RPP"    = as.numeric(bt$`RPP`$data1$w_optimized[1, ]),
+  "MDP"    = as.numeric(bt$`MDP`$data1$w_optimized[1, ]),
+  "MDCP"   = as.numeric(bt$`MDCP`$data1$w_optimized[1, ]),
+  check.names = FALSE
+) %>% melt(., id.vars = "stocks") %>%
+  ggplot(aes(x = stocks, y = value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black", width = 0.8) +
+  labs(title = "Capital weight allocation for different portfolios", y = "weight", fill = "portfolios")
+```
+
+```{r, echo=TRUE, fig.width=9, fig.height=4}
+backtestChartCumReturn(bt) +
+  geom_line(size = 0.8) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %Y", date_minor_breaks = "1 day") +
+  ggtitle("Cumulative return (out of sample)")
+
+backtestChartDrawdown(bt) +
+  geom_line(size = 0.8) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %Y", date_minor_breaks = "1 day") +
+  ggtitle("Drawdown (out of sample)")
+
+summary_bt <- backtestSummary(bt)
+summaryTable(summary_bt, type = "DT",
+             measures = c("Sharpe ratio", "annual return", "annual volatility", "max drawdown"))
+```
+

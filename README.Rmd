@@ -26,7 +26,39 @@ knit_hooks$set(pngquant = hook_pngquant)
 # pob
 This is a supporting package for the [Portfolio Optimization](https://www.danielppalomar.com/teaching-courses/fall-2021-22-mafs5310-portfolio-optimization-with-r/) course notes.
 
-To install:
+To install in R:
 ```{r, eval=FALSE}
 devtools::install_github("dppalomar/pob")
 ```
+
+To install in Python:
+```{r, eval=FALSE}
+# TBD
+```
+
+
+# Data
+The package contains stock data and cryptocurrency data:
+```{r}
+library(pob)
+
+# stock S&P500 market data
+data(SP500_2015to2020)
+names(SP500_2015to2020)
+head(SP500_2015to2020$stocks[, 1:5])
+
+# crypto data
+data(cryptos_2017to2021)
+names(cryptos_2017to2021)
+head(cryptos_2017to2021$hourly[, 1:5])
+```
+
+
+
+# Code examples
+
+- Chapter 6: Portfolio Basics
+  + code examples in R: [Rmd](code_examples/chapter-6/Rsession.Rmd), [html](code_examples/chapter-6/Rsession.html)
+  
+  
+  
