@@ -57,7 +57,7 @@ head(cryptos_2017to2021$hourly[, 1:5])
 # Code examples
 
 - Chapter 6: Portfolio Basics
-  + code examples in R: [Rmd](code_examples/chapter-6/Rsession.Rmd), [html](https://raw.githack.com/dppalomar/pob/master/code_examples/chapter-6/Rsession.html), 
+  + code examples in R: [Rmd](code_examples/R/chapter-6.Rmd), [html](https://raw.githack.com/dppalomar/pob/master/code_examples/R/chapter-6.html), 
   + code examples in Python: TBD
   
 - Chapter 7: Modern Portfolio Theory
