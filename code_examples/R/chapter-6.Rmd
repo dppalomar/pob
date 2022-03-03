@@ -4,14 +4,12 @@ author: "Daniel P. Palomar"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
   html_document:
-    #theme: flatly
-    #highlight: pygments
     toc: true
     toc_depth: 2
     toc_float: true
 ---
 
-```{r, echo = FALSE}
+```{r, echo=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
   collapse = TRUE,
@@ -22,7 +20,13 @@ knitr::opts_chunk$set(
 )
 options(width=120)
 ```
-
+\newcommand{\bm}[1]{\boldsymbol{#1}}
+<!--- https://bookdown.org/yihui/rmarkdown/html-document.html#includes
+output:
+  html_document:
+    includes:
+      in_header: header.html
+--->
 ------------
 
 
