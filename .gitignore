@@ -4,3 +4,12 @@
 .Ruserdata
 .DS_Store
 *.Rproj
+__pycache__
+dist
+build
+*.so
+pob.egg-info
+var
+.coverage
+.eggs
+.ipynb_checkpoints
