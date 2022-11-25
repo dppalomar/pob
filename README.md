@@ -2,10 +2,7 @@
 
 # Repository pob
 
-This is a supporting package for the [Portfolio
-Optimization](https://www.danielppalomar.com/teaching-courses/fall-2022-23-mafs5310-portfolio-optimization-with-r/)
-course notes. It contains data, slides, exercises, and code examples (R
-and Python).
+This repository contains supplementary material to the [Portfolio Optimization](https://www.danielppalomar.com/teaching-courses/fall-2022-23-mafs5310-portfolio-optimization-with-r/) course notes. It contains data, slides, exercises, and code examples (R and Python).
 
 To install in R:
 

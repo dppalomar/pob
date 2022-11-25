@@ -9,6 +9,7 @@ format:
         \newcounter{chapter}
         \renewcommand\thechapter{A}
         \newtheorem{exercise}{Exercise}[chapter]
+latex-auto-install: true
 editor: source
 # header-includes:
 #   #- \usepackage{amsmath,amssymb}
@@ -23,10 +24,10 @@ editor: source
 
 
 \begin{exercise}
-Quarto $\boldsymbol{w} = $
+In Quarto, this does not appear in boldface: $\boldsymbol{w}$.
 \end{exercise}
 
 \begin{exercise}
-Quarto kkkk
+Testing...
 \end{exercise}
 
