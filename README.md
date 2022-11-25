@@ -59,11 +59,9 @@ TBD
 
 ### Exercises
 
-- Chapter 11 - Risk Parity Portfolio
-  + [exercices](exercises/ch11-exercises.pdf)
+- Chapter 11 - Risk Parity Portfolio: [exercises](exercises/ch11-exercises.pdf)
     
-- Appendix A - Convex Optimization Theory
-  + [exercices](exercises/appA-exercises.pdf)
+- Appendix A - Convex Optimization Theory: [exercises](exercises/appA-exercises.pdf)
 
 - Appendix B - Optimization Algorithms
   + [exercices](exercises/appB-exercises.pdf)
@@ -74,11 +72,11 @@ TBD
 ### Code examples
 
 - Chapter 6 - Portfolio Basics
-  + [R code](code_examples/R/chapter-6.html)
+  + [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch6-R.html)
   + Python code: TBD
   
 - Chapter 7 - Modern Portfolio Theory
-  + [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/chapter-7.html)
+  + [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch7-R.html)
   + Python code: TBD
 
   
