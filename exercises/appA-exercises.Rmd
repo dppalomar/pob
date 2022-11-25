@@ -1,0 +1,26 @@
+---
+title: "Appendix A - Convex Optimization Theory"
+subtitle: "Exercises"
+output: 
+  pdf_document:
+header-includes: |
+  \usepackage{bm}
+  \newcounter{chapter}
+  \renewcommand\thechapter{A}
+  \newtheorem{exercise}{Exercise}[chapter]
+  \def\T{{\mkern-2mu\mathsf{T}}}
+---
+
+\begin{exercise}
+Testing $\bm{w} = $
+\end{exercise}
+
+\begin{exercise}
+$$
+\begin{array}{ll}
+\underset{\bm{x}}{\mathsf{minimize}} & \bm{c}^\T\bm{x}\\
+\mathsf{subject to} & \bm{a}_i^\T\bm{x}\leq b_i, \quad i=1,\ldots,m.
+\end{array}
+$$
+\end{exercise}
+

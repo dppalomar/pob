@@ -27,3 +27,8 @@ devtools::test()
 
 # generate tarball
 #R CMD build .
+
+
+# GitHub related:
+# To see people who starred: https://github.com/dppalomar/pob/stargazers
+# To see people who are watching: https://github.com/dppalomar/pob/watchers

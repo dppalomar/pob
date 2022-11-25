@@ -1,0 +1,32 @@
+---
+title: "Appendix A - Convex Optimization Theory"
+subtitle: "Exercises"
+format:
+  pdf: 
+    include-in-header:
+      text: |
+        \usepackage{amsmath}
+        \newcounter{chapter}
+        \renewcommand\thechapter{A}
+        \newtheorem{exercise}{Exercise}[chapter]
+editor: source
+# header-includes:
+#   #- \usepackage{amsmath,amssymb}
+#   #- \usepackage{bm}
+#   #- \usepackage{amsthm}
+#   - \newcounter{chapter}
+#   - \renewcommand\thechapter{A}
+#   - \newtheorem{exercise}{Exercise}[chapter]
+#   #- \def\T{{\mkern-2mu\mathsf{T}}}
+#   #- \newcommand{\bm}[1]{\boldsymbol{#1}}
+---
+
+
+\begin{exercise}
+Quarto $\boldsymbol{w} = $
+\end{exercise}
+
+\begin{exercise}
+Quarto kkkk
+\end{exercise}
+

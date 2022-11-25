@@ -128,7 +128,7 @@ X <- stock_prices/lag(stock_prices) - 1
 # portfolio
 w <- rep(1/N, N)
 
-# naive backtest (assumed daily rebalancing and no transaction cost)
+# naive backtest (assuming daily rebalancing and no transaction cost)
 portf_ret <- xts(X %*% w, index(X))
 head(na.omit(portf_ret))
 ```

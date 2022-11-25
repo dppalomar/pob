@@ -23,8 +23,8 @@ opts_chunk$set(
 knit_hooks$set(pngquant = hook_pngquant)
 ```
 
-# pob
-This is a supporting package for the [Portfolio Optimization](https://www.danielppalomar.com/teaching-courses/fall-2021-22-mafs5310-portfolio-optimization-with-r/) course notes.
+# Repository pob
+This is a supporting package for the [Portfolio Optimization](https://www.danielppalomar.com/teaching-courses/fall-2022-23-mafs5310-portfolio-optimization-with-r/) course notes. It contains data, slides, exercises, and code examples (R and Python).
 
 To install in R:
 ```{r, eval=FALSE}
@@ -37,7 +37,7 @@ To install in Python:
 ```
 
 
-# Data
+### Data
 The package contains stock data and cryptocurrency data:
 ```{r}
 library(pob)
@@ -54,19 +54,32 @@ head(cryptos_2017to2021$hourly[, 1:5])
 ```
 
 
+### Slides
+TBD
 
-# Code examples
 
-- Chapter 6: Portfolio Basics
-  + code examples in R: [Rmd](code_examples/R/chapter-6.Rmd), [html](https://raw.githack.com/dppalomar/pob/master/code_examples/R/chapter-6.html), 
-  + code examples in Python: TBD
+### Exercises
+
+- Chapter 11 - Risk Parity Portfolio
+  + [exercices](exercises/ch11-exercises.pdf)
+    
+- Appendix A - Convex Optimization Theory
+  + [exercices](exercises/appA-exercises.pdf)
+
+- Appendix B - Optimization Algorithms
+  + [exercices](exercises/appB-exercises.pdf)
+
+
+
+
+### Code examples
+
+- Chapter 6 - Portfolio Basics
+  + [R code](code_examples/R/chapter-6.html)
+  + Python code: TBD
   
-- Chapter 7: Modern Portfolio Theory
-  + code examples in R: [Rmd](code_examples/R/chapter-7.Rmd), [html](https://raw.githack.com/dppalomar/pob/master/code_examples/R/chapter-7.html), 
-  + code examples in Python: TBD
-  
-- Chapter 8: Portfolio Backtesting
-  + code examples in R: TBD
-  + code examples in Python: TBD  
-  
+- Chapter 7 - Modern Portfolio Theory
+  + [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/chapter-7.html)
+  + Python code: TBD
+
   
