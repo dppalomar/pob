@@ -1,28 +1,29 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
-
 # Repository pob
-This is a supporting package for the [Portfolio Optimization](https://www.danielppalomar.com/teaching-courses/fall-2022-23-mafs5310-portfolio-optimization-with-r/) course notes. It contains data, slides, exercises, and code examples (R and Python).
+
+This is a supporting package for the [Portfolio
+Optimization](https://www.danielppalomar.com/teaching-courses/fall-2022-23-mafs5310-portfolio-optimization-with-r/)
+course notes. It contains data, slides, exercises, and code examples (R
+and Python).
 
 To install in R:
 
-```r
+``` r
 devtools::install_github("dppalomar/pob")
 ```
 
 To install in Python:
 
-```r
+``` r
 # TBD
 ```
 
-
 ### Data
+
 The package contains stock data and cryptocurrency data:
 
-```r
+``` r
 library(pob)
 
 # stock S&P500 market data
@@ -52,31 +53,27 @@ head(cryptos_2017to2021$hourly[, 1:5])
 #> [6,] 38441.49 1223.862 0.3156046  9.785281 0.3412451
 ```
 
-
 ### Slides
-TBD
 
+TBD
 
 ### Exercises
 
-- Chapter 11 - Risk Parity Portfolio: [exercises](exercises/ch11-exercises.pdf)
-    
-- Appendix A - Convex Optimization Theory: [exercises](exercises/appA-exercises.pdf)
+-   Chapter 11 - Risk Parity Portfolio:
+    [exercises](exercises/ch11-exercises.pdf)
 
-- Appendix B - Optimization Algorithms
-  + [exercices](exercises/appB-exercises.pdf)
+-   Appendix A - Convex Optimization Theory:
+    [exercises](exercises/appA-exercises.pdf)
 
-
-
+-   Appendix B - Optimization Algorithms:
+    [exercices](exercises/appB-exercises.pdf)
 
 ### Code examples
 
-- Chapter 6 - Portfolio Basics
-  + [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch6-R.html)
-  + Python code: TBD
-  
-- Chapter 7 - Modern Portfolio Theory
-  + [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch7-R.html)
-  + Python code: TBD
+-   Chapter 6 - Portfolio Basics: [R
+    code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch6-R.html),
+    Python code TBD
 
-  
+-   Chapter 7 - Modern Portfolio Theory: [R
+    code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch7-R.html),
+    Python code TBD

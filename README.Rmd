@@ -1,10 +1,10 @@
 ---
 output:
+  md_document:
+    variant: markdown_github
   html_document:
     variant: markdown_github
     keep_md: true
-  md_document:
-    variant: markdown_github
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -64,20 +64,15 @@ TBD
     
 - Appendix A - Convex Optimization Theory: [exercises](exercises/appA-exercises.pdf)
 
-- Appendix B - Optimization Algorithms
-  + [exercices](exercises/appB-exercises.pdf)
+- Appendix B - Optimization Algorithms: [exercices](exercises/appB-exercises.pdf)
 
 
 
 
 ### Code examples
 
-- Chapter 6 - Portfolio Basics
-  + [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch6-R.html)
-  + Python code: TBD
+- Chapter 6 - Portfolio Basics: [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch6-R.html), Python code TBD
   
-- Chapter 7 - Modern Portfolio Theory
-  + [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch7-R.html)
-  + Python code: TBD
+- Chapter 7 - Modern Portfolio Theory: [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch7-R.html), Python code TBD
 
   
