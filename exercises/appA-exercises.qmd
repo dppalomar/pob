@@ -3,6 +3,7 @@ title: "Appendix A - Convex Optimization Theory"
 subtitle: "Exercises"
 format:
   pdf:
+    documentclass: scrartcl
     pdf-engine: pdflatex
     include-in-header:
       text: |
@@ -18,6 +19,8 @@ editor: source
 \begin{exercise}
 Testing $\bm{w} = $
 \end{exercise}
+
+
 
 \begin{exercise}
 $$

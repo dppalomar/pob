@@ -3,6 +3,7 @@ title: "Chapter 11 - Risk Parity Portfolio"
 subtitle: "Exercises"
 format:
   pdf:
+    documentclass: scrartcl
     pdf-engine: pdflatex
     include-in-header:
       text: |

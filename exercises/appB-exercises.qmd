@@ -3,6 +3,7 @@ title: "Appendix B - Optimization Algorithms"
 subtitle: "Exercises"
 format:
   pdf:
+    documentclass: scrartcl
     pdf-engine: pdflatex
     include-in-header:
       text: |
@@ -19,6 +20,8 @@ editor: source
 Testing $\bm{w} = $
 \end{exercise}
 
+
+
 \begin{exercise}
 $$
 \begin{array}{ll}
@@ -27,4 +30,3 @@ $$
 \end{array}
 $$
 \end{exercise}
-
