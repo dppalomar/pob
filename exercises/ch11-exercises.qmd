@@ -1,17 +1,21 @@
 ---
 title: "Chapter 11 - Risk Parity Portfolio"
 subtitle: "Exercises"
-output: 
-  pdf_document:
-header-includes: |
-  \usepackage{bm}
-  \newcounter{chapter}
-  \renewcommand\thechapter{11}
-  \newtheorem{exercise}{Exercise}[chapter]
-  \def\T{{\mkern-2mu\mathsf{T}}}
-  \def\bSigma{\bm{\Sigma}}
-  \def\textm{\mathsf}
+format:
+  pdf:
+    pdf-engine: pdflatex
+    include-in-header:
+      text: |
+        \usepackage{bm}
+        \newcounter{chapter}
+        \renewcommand\thechapter{11}
+        \newtheorem{exercise}{Exercise}[chapter]
+        \def\T{{\mkern-2mu\mathsf{T}}}
+        \def\bSigma{\bm{\Sigma}}
+        \def\textm{\mathsf}
+editor: source
 ---
+
 
 \begin{exercise}
 Show why $\bSigma\bm{x} = \bm{b}/\bm{x}$ can be equivalently solved as $\bm{C}\bm{x} = \bm{b}/\bm{x}$, where $\bm{C}$ is the correlation matrix defined as $\bm{C} = \bm{D}^{-1/2}\bSigma\bm{D}^{-1/2}$ with $\bm{D}$ a diagonal matrix containing $\textm{diag}(\bSigma)$ along the main diagonal. Would it be possible to use instead $\bm{C} = \bm{M}^{-1/2}\bSigma\bm{M}^{-1/2}$, where $\bm{M}$ is not necessaryly a diagonal matrix?
@@ -36,11 +40,11 @@ is $$\lambda\bSigma\bm{x} = \bm{b}/\bm{x} \times \sqrt{\bm{x}^\T\bSigma\bm{x}}.$
 
 
 \begin{exercise}
-Newton's method requires computing the direction $\bm{d} = {\sf H}^{-1}\nabla f$ or, equivalently, solving the system of linear equations ${\sf H}\bm{d} = \nabla f$ for $\bm{d}$. Explore whether a more efficient solution is possible exploiting the structure of the gradient and Hessian:
+Newton's method requires computing the direction $\bm{d} = \mathsf{H}^{-1}\nabla f$ or, equivalently, solving the system of linear equations $\mathsf{H}\bm{d} = \nabla f$ for $\bm{d}$. Explore whether a more efficient solution is possible exploiting the structure of the gradient and Hessian:
 $$
 \begin{aligned}
-\nabla f &= \bSigma\bm{x} - \bm{b}/\bm{x}\\
-{\sf H}  &= \bSigma + \textm{Diag}(\bm{b}/\bm{x}^2).
+\nabla f   &= \bSigma\bm{x} - \bm{b}/\bm{x}\\
+\mathsf{H} &= \bSigma + \textm{Diag}(\bm{b}/\bm{x}^2).
 \end{aligned}
 $$
 \end{exercise}

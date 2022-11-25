@@ -1,15 +1,19 @@
 ---
 title: "Appendix B - Optimization Algorithms"
 subtitle: "Exercises"
-output: 
-  pdf_document:
-header-includes: |
-  \usepackage{bm}
-  \newcounter{chapter}
-  \renewcommand\thechapter{B}
-  \newtheorem{exercise}{Exercise}[chapter]
-  \def\T{{\mkern-2mu\mathsf{T}}}
+format:
+  pdf:
+    pdf-engine: pdflatex
+    include-in-header:
+      text: |
+        \usepackage{bm}
+        \newcounter{chapter}
+        \renewcommand\thechapter{B}
+        \newtheorem{exercise}{Exercise}[chapter]
+        \def\T{{\mkern-2mu\mathsf{T}}}
+editor: source
 ---
+
 
 \begin{exercise}
 Testing $\bm{w} = $
