@@ -37,6 +37,7 @@ To install in Python:
 ```
 
 
+
 ### Data
 The package contains stock data and cryptocurrency data:
 ```{r}
@@ -54,13 +55,19 @@ head(cryptos_2017to2021$hourly[, 1:5])
 ```
 
 
+
+
 ### Slides
 TBD
 
 
+
+
 ### Exercises
 
-- Chapter 11 - Risk Parity Portfolio: [exercises](exercises/ch11-exercises.pdf)
+- Chapter 9 - High Order Portfolios: [exercises](exercises/ch09-exercises.pdf)
+
+- Chapter 11 - Risk Parity Portfolios: [exercises](exercises/ch11-exercises.pdf)
     
 - Appendix A - Convex Optimization Theory: [exercises](exercises/appA-exercises.pdf)
 

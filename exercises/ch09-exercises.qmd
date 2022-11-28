@@ -1,5 +1,5 @@
 ---
-title: "Chapter 11 - Risk Parity Portfolios"
+title: "Chapter 9 - High Order Portfolios"
 subtitle: "Exercises"
 format:
   pdf:
@@ -9,7 +9,7 @@ format:
       text: |
         \usepackage{bm}
         \newcounter{chapter}
-        \renewcommand\thechapter{11}
+        \renewcommand\thechapter{9}
         \newtheorem{exercise}{Exercise}[chapter]
         \def\T{{\mkern-2mu\mathsf{T}}}
         \def\bSigma{\bm{\Sigma}}

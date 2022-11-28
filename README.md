@@ -2,7 +2,10 @@
 
 # Repository pob
 
-This repository contains supplementary material to the [Portfolio Optimization](https://www.danielppalomar.com/teaching-courses/fall-2022-23-mafs5310-portfolio-optimization-with-r/) course notes. It contains data, slides, exercises, and code examples (R and Python).
+This is a supporting package for the [Portfolio
+Optimization](https://www.danielppalomar.com/teaching-courses/fall-2022-23-mafs5310-portfolio-optimization-with-r/)
+course notes. It contains data, slides, exercises, and code examples (R
+and Python).
 
 To install in R:
 
@@ -56,7 +59,10 @@ TBD
 
 ### Exercises
 
--   Chapter 11 - Risk Parity Portfolio:
+-   Chapter 9 - High Order Portfolios:
+    [exercises](exercises/ch09-exercises.pdf)
+
+-   Chapter 11 - Risk Parity Portfolios:
     [exercises](exercises/ch11-exercises.pdf)
 
 -   Appendix A - Convex Optimization Theory:
