@@ -3,7 +3,8 @@
 # Data repository pob
 
 This is a data supporting package for the [Portfolio Optimization
-Book](https://portfoliooptimizationbook.com).
+Book](https://portfoliooptimizationbook.com), with the [developer GitHub
+webpage](https://github.com/portfoliooptimizationbook).
 
 For additional material, such as slides, exercises, and code examples (R
 and Python), please check <https://portfoliooptimizationbook.com>
