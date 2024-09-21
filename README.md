@@ -1,11 +1,12 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Repository pob
+# Data repository pob
 
-This is a supporting package for the [Portfolio
-Optimization](https://www.danielppalomar.com/teaching-courses/fall-2022-23-mafs5310-portfolio-optimization-with-r/)
-course notes. It contains data, slides, exercises, and code examples (R
-and Python).
+This is a data supporting package for the [Portfolio Optimization
+Book](https://portfoliooptimizationbook.com).
+
+For additional material, such as slides, exercises, and code examples (R
+and Python), please check <https://portfoliooptimizationbook.com>
 
 To install in R:
 
@@ -30,6 +31,9 @@ library(pob)
 data(SP500_2015to2020)
 names(SP500_2015to2020)
 #> [1] "stocks" "index"
+```
+
+``` r
 head(SP500_2015to2020$stocks[, 1:5])
 #>            A     AAL     AAP   AAPL    ABBV
 #> [1,] 37.7523 51.0467 154.217 24.239 50.8722
@@ -38,11 +42,17 @@ head(SP500_2015to2020$stocks[, 1:5])
 #> [4,] 38.7862 50.8430 158.800 25.526 53.2171
 #> [5,] 38.5016 49.2891 157.991 25.553 51.7614
 #> [6,] 38.0463 46.9772 156.641 24.923 51.7457
+```
+
+``` r
 
 # crypto data
 data(cryptos_2017to2021)
 names(cryptos_2017to2021)
 #> [1] "daily"  "hourly"
+```
+
+``` r
 head(cryptos_2017to2021$hourly[, 1:5])
 #>           BTC      ETH       ADA       DOT       XRP
 #> [1,] 37485.61 1204.525 0.3309979 10.005659 0.3051329
@@ -53,30 +63,30 @@ head(cryptos_2017to2021$hourly[, 1:5])
 #> [6,] 38441.49 1223.862 0.3156046  9.785281 0.3412451
 ```
 
+<!---
 ### Slides
-
 TBD
+
+
+
 
 ### Exercises
 
--   Chapter 9 - High Order Portfolios:
-    [exercises](exercises/ch09-exercises.pdf)
+- Chapter 9 - High Order Portfolios: [exercises](exercises/ch09-exercises.pdf)
 
--   Chapter 11 - Risk Parity Portfolios:
-    [exercises](exercises/ch11-exercises.pdf)
+- Chapter 11 - Risk Parity Portfolios: [exercises](exercises/ch11-exercises.pdf)
+    
+- Appendix A - Convex Optimization Theory: [exercises](exercises/appA-exercises.pdf)
 
--   Appendix A - Convex Optimization Theory:
-    [exercises](exercises/appA-exercises.pdf)
+- Appendix B - Optimization Algorithms: [exercices](exercises/appB-exercises.pdf)
 
--   Appendix B - Optimization Algorithms:
-    [exercices](exercises/appB-exercises.pdf)
+
+
 
 ### Code examples
 
--   Chapter 6 - Portfolio Basics: [R
-    code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch6-R.html),
-    Python code TBD
+- Chapter 6 - Portfolio Basics: [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch6-R.html), Python code TBD
+  
+- Chapter 7 - Modern Portfolio Theory: [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch7-R.html), Python code TBD
 
--   Chapter 7 - Modern Portfolio Theory: [R
-    code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch7-R.html),
-    Python code TBD
+--->
