@@ -34,15 +34,17 @@ devtools::install_github("dppalomar/pob")
 ```
 
 To install in Python:
-```{r, eval=FALSE}
-# TBD
+```{python, eval=FALSE}
+pip install "git+https://github.com/dppalomar/pob.git#subdirectory=python"
 ```
 
 
 
-### Data
-The package contains stock data and cryptocurrency data:
-```{r}
+### Loading data
+The package contains S&P 500 stock data and cryptocurrency data.
+
+To load data in R:
+```{r, eval=FALSE}
 library(pob)
 
 # stock S&P500 market data
@@ -56,32 +58,18 @@ names(cryptos_2017to2021)
 head(cryptos_2017to2021$hourly[, 1:5])
 ```
 
+To load data in Python:
+```{python, eval=FALSE}
+from pob_python import SP500_stocks_2015to2020, cryptos_2017to2021_daily
 
+# Access S&P 500 components
+print(SP500_stocks_2015to2020.columns)
+print(SP500_stocks_2015to2020.head())
 
-<!---
-### Slides
-TBD
+# Access crypto data
+print(cryptos_2017to2021_daily.columns)
+print(cryptos_2017to2021_daily.head())
+print(cryptos_2017to2021_daily['BTC'])
+print(cryptos_2017to2021_daily['ETH'])
+```
 
-
-
-
-### Exercises
-
-- Chapter 9 - High Order Portfolios: [exercises](exercises/ch09-exercises.pdf)
-
-- Chapter 11 - Risk Parity Portfolios: [exercises](exercises/ch11-exercises.pdf)
-    
-- Appendix A - Convex Optimization Theory: [exercises](exercises/appA-exercises.pdf)
-
-- Appendix B - Optimization Algorithms: [exercices](exercises/appB-exercises.pdf)
-
-
-
-
-### Code examples
-
-- Chapter 6 - Portfolio Basics: [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch6-R.html), Python code TBD
-  
-- Chapter 7 - Modern Portfolio Theory: [R code](https://raw.githack.com/dppalomar/pob/master/code_examples/R/ch7-R.html), Python code TBD
-
---->
